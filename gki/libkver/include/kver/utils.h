@@ -16,15 +16,15 @@
 
 #pragma once
 
-extern "C" {
-  // Daemon side operations.
-  void InitService(bool start);
+#include <optional>
+#include <string>
 
-  // Client side operations.
-  void ScheduleCollection();
-  void TerminateCollection();
-  void TraceOnce();
-  void Process();
-  void CreateProfileReport();
-  void ReadConfig();
-}
+#include <kver/kernel_release.h>
+
+namespace android::kver {
+
+// Check if new_release is a valid update against old_release.
+bool IsKernelUpdateValid(const std::optional<KernelRelease>& old_kernel_release,
+                         const std::optional<KernelRelease>& new_kernel_release);
+
+}  // namespace android::kver
