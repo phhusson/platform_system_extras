@@ -1,4 +1,5 @@
-// Copyright (C) 2015 The Android Open Source Project
+//
+// Copyright (C) 2020 The Android Open Source Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,20 +12,27 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#include <map>
-#include <vector>
+#pragma once
 
-#ifndef _IOTOP_TASKLIST_H
-#define _IOTOP_TASKLIST_H
+#include <variant>
 
-class TaskList {
- public:
-  static bool Scan(std::map<pid_t, std::vector<pid_t>>&);
+#include <android-base/parseint.h>
+#include <server_configurable_flags/get_flags.h>
 
- private:
-  TaskList() {}
-  static bool ScanPid(pid_t pid, std::vector<pid_t>&);
+namespace android {
+namespace profcollectd {
+
+struct config_t {
+  const char* name;
+  const char* defaultValue;
 };
 
-#endif  // _IOTOP_TASKLIST_H
+std::string getBuildFingerprint();
+std::string getConfigFlag(const config_t& config);
+int getConfigFlagInt(const config_t& config);
+float getConfigFlagFloat(const config_t& config);
+
+}  // namespace profcollectd
+}  // namespace android
